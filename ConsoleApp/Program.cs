@@ -13,6 +13,96 @@ namespace ConsoleApp
 
         private static void Main(string[] args)
         {
+            InitializeStack();
+            Console.ReadKey();
+        }
+
+        private static void InitializeStack()
+        {
+            var shirts = new ConcurrentStack<string>();
+            shirts.Push("Pluralsight");
+            shirts.Push("WordPress");
+            shirts.Push("Code School");
+
+            Console.WriteLine($"After enqueuing count = {shirts.Count}");
+
+            //string item1 = shirts.Dequeue();
+            var success = shirts.TryPop(out string item1);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nRemoving {item1}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            success = shirts.TryPeek(out string item2);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nPeeking {item2}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            Console.WriteLine($"\r\nEnumerating");
+
+            foreach (var item in shirts)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine($"After enumerating count = {shirts.Count}");
+        }
+
+        private static void InitializeQueue()
+        {
+            var shirts = new ConcurrentQueue<string>();
+            shirts.Enqueue("Pluralsight");
+            shirts.Enqueue("WordPress");
+            shirts.Enqueue("Code School");
+
+            Console.WriteLine($"After enqueuing count = {shirts.Count}");
+
+            //string item1 = shirts.Dequeue();
+            var success = shirts.TryDequeue(out string item1);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nRemoving {item1}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            success = shirts.TryPeek(out string item2);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nPeeking {item2}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            Console.WriteLine($"\r\nEnumerating");
+
+            foreach (var item in shirts)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine($"After enumerating count = {shirts.Count}");
+        }
+
+        private static void InitializeWithConcurrentDictionary()
+        {
             StockController controller = new StockController();
             TimeSpan workDay = new TimeSpan(0, 0, 2);
 
@@ -23,8 +113,6 @@ namespace ConsoleApp
 
             Task.WaitAll(t1, t2, t3, t4);
             controller.DisplayStatus();
-
-            Console.ReadKey();
         }
 
         private static void RunDictionary()
