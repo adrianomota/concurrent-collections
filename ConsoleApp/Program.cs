@@ -17,6 +17,51 @@ namespace ConsoleApp
             Console.ReadKey();
         }
 
+        //Sem ordem
+        private static void InitializeConcurrentBag()
+
+        {
+            var shirts = new ConcurrentBag<string>();
+            shirts.Add("Pluralsight");
+            shirts.Add("WordPress");
+            shirts.Add("Code School");
+
+            Console.WriteLine($"After enqueuing count = {shirts.Count}");
+
+            //string item1 = shirts.Dequeue();
+            var success = shirts.TryTake(out string item1);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nRemoving {item1}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            success = shirts.TryPeek(out string item2);
+
+            if (success)
+            {
+                Console.WriteLine($"\r\nPeeking {item2}");
+            }
+            else
+            {
+                Console.WriteLine($"queue empty");
+            }
+
+            Console.WriteLine($"\r\nEnumerating");
+
+            foreach (var item in shirts)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine($"After enumerating count = {shirts.Count}");
+        }
+
+        //LIFO
         private static void InitializeStack()
         {
             var shirts = new ConcurrentStack<string>();
@@ -59,6 +104,7 @@ namespace ConsoleApp
             Console.WriteLine($"After enumerating count = {shirts.Count}");
         }
 
+        //FIFO
         private static void InitializeQueue()
         {
             var shirts = new ConcurrentQueue<string>();
